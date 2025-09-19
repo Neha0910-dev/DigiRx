@@ -64,7 +64,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
             ),
             const SizedBox(width: 8),
             const Text(
-              "AppointEase",
+              "DigiRx",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.red,
@@ -73,12 +73,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black87),
-            onPressed: () {},
-          )
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -106,37 +100,52 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
               height: 25,
             ),
             // TabBar kept outside AppBar
-            Material(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(10),
-              child: PreferredSize(
-                preferredSize: const Size.fromHeight(36),
-                child: SizedBox(
-                  height: 36,
-                  child: TabBar(
-                    controller: _tabController,
-                    labelPadding: const EdgeInsets.symmetric(horizontal: 12),
-                    labelColor: Colors.black,
-                    unselectedLabelColor: Colors.grey,
-                    indicator: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey.shade300),
+            Consumer<AppointmentProvider>(
+              builder: (context, appointmentProvider, child) {
+                final upcomingCount = appointmentProvider
+                    .getAppointmentsByStatus(AppointmentStatus.upcoming)
+                    .length;
+                final completedCount = appointmentProvider
+                    .getAppointmentsByStatus(AppointmentStatus.completed)
+                    .length;
+                final cancelledCount = appointmentProvider
+                    .getAppointmentsByStatus(AppointmentStatus.cancelled)
+                    .length;
+
+                return Material(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(10),
+                  child: PreferredSize(
+                    preferredSize: const Size.fromHeight(36),
+                    child: SizedBox(
+                      height: 36,
+                      child: TabBar(
+                        controller: _tabController,
+                        labelPadding:
+                            const EdgeInsets.symmetric(horizontal: 12),
+                        labelColor: Colors.black,
+                        unselectedLabelColor: Colors.grey,
+                        indicator: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey.shade300),
+                        ),
+                        dividerColor: Colors.transparent,
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        labelStyle: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 14),
+                        unselectedLabelStyle: const TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 14),
+                        tabs: [
+                          Tab(text: "Upcoming ($upcomingCount)"),
+                          Tab(text: "Completed ($completedCount)"),
+                          Tab(text: "Cancelled ($cancelledCount)"),
+                        ],
+                      ),
                     ),
-                    dividerColor: Colors.transparent,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    labelStyle: const TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 14),
-                    unselectedLabelStyle: const TextStyle(
-                        fontWeight: FontWeight.w500, fontSize: 14),
-                    tabs: const [
-                      Tab(text: "Upcoming (2)"),
-                      Tab(text: "Completed (2)"),
-                      Tab(text: "Cancelled (1)"),
-                    ],
                   ),
-                ),
-              ),
+                );
+              },
             ),
 
             // Tab content
@@ -186,6 +195,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                   const SizedBox(height: AppConstants.paddingSmall),
               itemBuilder: (context, index) {
                 final appointment = appointments[index];
+                print(appointment);
+                print(appointment.doctorName);
                 return AppointmentCard(
                   appointment: appointment,
                   onTap: () => _showAppointmentDetails(appointment),

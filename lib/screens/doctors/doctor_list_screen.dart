@@ -155,25 +155,114 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                         ),
                       ),
                       // Filters expand section
-                      // SizeTransition(
-                      //   sizeFactor: _filterAnimation,
-                      //   child: Container(
-                      //     margin: const EdgeInsets.only(
-                      //         top: AppConstants.paddingMedium),
-                      //     padding:
-                      //         const EdgeInsets.all(AppConstants.paddingMedium),
-                      //     decoration: BoxDecoration(
-                      //       color:
-                      //           colorScheme.surfaceContainer.withOpacity(0.5),
-                      //       borderRadius: BorderRadius.circular(
-                      //           AppConstants.radiusMedium),
-                      //       border: Border.all(
-                      //         color: colorScheme.outline.withOpacity(0.2),
-                      //       ),
-                      //     ),
-                      //     child: Text("Filters here..."), // keep your filter UI
-                      //   ),
-                      // ),
+                      SizeTransition(
+                        sizeFactor: _filterAnimation,
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              top: AppConstants.paddingMedium),
+                          padding:
+                              const EdgeInsets.all(AppConstants.paddingMedium),
+                          decoration: BoxDecoration(
+                            color:
+                                colorScheme.surfaceContainer.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(
+                                AppConstants.radiusMedium),
+                            border: Border.all(
+                              color: colorScheme.outline.withOpacity(0.2),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // 🏅 Experience Filter
+                              Text("Experience",
+                                  style: theme.textTheme.titleSmall),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 8,
+                                children: [
+                                  FilterChip(
+                                    label: const Text("0-5 yrs"),
+                                    selected: false,
+                                    onSelected: (val) {
+                                      // handle selection
+                                    },
+                                  ),
+                                  FilterChip(
+                                    label: const Text("5-10 yrs"),
+                                    selected: false,
+                                    onSelected: (val) {},
+                                  ),
+                                  FilterChip(
+                                    label: const Text("10+ yrs"),
+                                    selected: false,
+                                    onSelected: (val) {},
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+
+                              // 🩺 Specialization Filter
+                              Text("Specialization",
+                                  style: theme.textTheme.titleSmall),
+                              const SizedBox(height: 8),
+                              DropdownButtonFormField<String>(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 8),
+                                ),
+                                hint: const Text("Select specialization"),
+                                items: [
+                                  "Cardiologist",
+                                  "Dermatologist",
+                                  "Neurologist",
+                                  "Pediatrician",
+                                ]
+                                    .map((spec) => DropdownMenuItem(
+                                          value: spec,
+                                          child: Text(spec),
+                                        ))
+                                    .toList(),
+                                onChanged: (val) {
+                                  // handle specialization change
+                                },
+                              ),
+                              const SizedBox(height: 16),
+
+                              // ⭐ Rating Filter with Chips
+                              Text("Rating", style: theme.textTheme.titleSmall),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 8,
+                                children: [
+                                  FilterChip(
+                                    label: const Text("4⭐ & above"),
+                                    selected: false,
+                                    onSelected: (val) {
+                                      // handle 4+ filter
+                                    },
+                                  ),
+                                  FilterChip(
+                                    label: const Text("3⭐ & above"),
+                                    selected: false,
+                                    onSelected: (val) {
+                                      // handle 3+ filter
+                                    },
+                                  ),
+                                  FilterChip(
+                                    label: const Text("2⭐ & above"),
+                                    selected: false,
+                                    onSelected: (val) {
+                                      // handle 2+ filter
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

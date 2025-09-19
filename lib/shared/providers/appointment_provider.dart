@@ -34,7 +34,7 @@ class AppointmentProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final List data = jsonDecode(response.body);
-
+        print(url);
         _appointments = data.map((json) => Appointment.fromJson(json)).toList();
 
         // Sort appointments by date

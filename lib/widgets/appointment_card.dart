@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:surebook/shared/constants/app_constants.dart';
 import 'package:surebook/shared/models/appointment_model.dart';
 
@@ -106,13 +107,13 @@ class AppointmentCard extends StatelessWidget {
             /// --- Date & Time
             _buildDetailRow(
               Icons.calendar_today,
-              _formatDate(appointment.date),
+              _formatDate(appointment.createdAt),
               theme,
             ),
             const SizedBox(height: 10),
             _buildDetailRow(
               Icons.access_time,
-              appointment.timeSlot,
+              _formatTime(appointment.createdAt),
               theme,
             ),
             const SizedBox(height: 10),
@@ -207,7 +208,11 @@ class AppointmentCard extends StatelessWidget {
   }
 
   String _formatDate(DateTime date) {
-    return "${date.weekday}, ${date.day} ${_monthName(date.month)} ${date.year}";
+    return "${date.day} ${_monthName(date.month)} ${date.year}";
+  }
+
+  String _formatTime(DateTime date) {
+    return DateFormat.jm().format(date); // 👉 gives "4:07 PM"
   }
 
   String _monthName(int month) {
