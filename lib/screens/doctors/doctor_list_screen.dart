@@ -234,7 +234,7 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                               Text("Rating", style: theme.textTheme.titleSmall),
                               const SizedBox(height: 8),
                               Wrap(
-                                spacing: 8,
+                                spacing: 10,
                                 children: [
                                   FilterChip(
                                     label: const Text("4⭐ & above"),
@@ -250,12 +250,16 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                                       // handle 3+ filter
                                     },
                                   ),
-                                  FilterChip(
-                                    label: const Text("2⭐ & above"),
-                                    selected: false,
-                                    onSelected: (val) {
-                                      // handle 2+ filter
-                                    },
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                    child: FilterChip(
+                                      label: const Text("2⭐ & above"),
+                                      selected: false,
+                                      onSelected: (val) {
+                                        // handle 2+ filter
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),
